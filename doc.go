@@ -1,4 +1,4 @@
-// Package strftime provides functionality for formatting time based on the C strftime(3) function.
+// Package strftime provides functionality for formatting time based on the C strftime(3) function. http://man7.org/linux/man-pages/man3/strftime.3.html
 //
 // The Go standard library time package uses layout strings based on the reference time Mon Jan 2 15:04:05 MST 2006
 // (AKA 01/02 03:04:05PM ‘06 -0700). The purpose of the strftime package is not to replace the time package layout
@@ -8,9 +8,10 @@
 //
 // Conversion Specifications
 //
-// This package attempts to comply with the C strftime(3) function as reasonably possible. The format specification
-// strings contain special character sequences called conversion specifications. Conversion specifications are prefixed
-// by the % character. At this time all conversion specifications are supported with the exception of modifiers.
+// This package attempts to comply with the C strftime(3) function closely as reasonably possible. The format
+// specification strings contain special character sequences called conversion specifications. Conversion specifications
+// are prefixed by the % character. At this time all conversion specifications are supported with the exception of
+// modifiers.
 //
 // Localization
 //
