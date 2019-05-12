@@ -2,7 +2,6 @@ package strftime
 
 import (
 	"fmt"
-	"math"
 	"strconv"
 	"time"
 )
@@ -78,5 +77,5 @@ func yearWeek(t time.Time, start time.Weekday) int {
 	if start >= jan1.Weekday() {
 		offset = 1
 	}
-	return int(math.Floor(float64(t.YearDay()))/7) + offset
+	return int(float64(t.YearDay()))/7 + offset
 }
