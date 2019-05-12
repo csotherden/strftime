@@ -2,8 +2,10 @@ package strftime
 
 import "time"
 
-func Parse(format, timeString string) (time.Time, error) {
+// Parse parses a formatted string and returns the time.Time value it represents.
+// The format defines the input value format using C strftime(3) conversion specifications.
+func Parse(format, value string) (time.Time, error) {
 	layout := parseFormat(format, convSpecs)
 
-	return time.Parse(layout, timeString)
+	return time.Parse(layout, value)
 }
