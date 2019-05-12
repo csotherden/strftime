@@ -6,7 +6,6 @@ language: go
 # These will both be unnecessary when Go 1.13 lands.
 env:
   - GO111MODULE=on
-  - GOFLAGS='-mod vendor'
 
 go:
   - master
