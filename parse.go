@@ -5,7 +5,7 @@ import (
 	"time"
 )
 
-func parseFormat(f string) string {
+func parseFormat(f string, specs map[rune]string) string {
 	buf := bytes.NewBuffer(make([]byte, 0, len(f)*2))
 
 	for i := 0; i < len(f); i++ {
@@ -15,15 +15,11 @@ func parseFormat(f string) string {
 		}
 
 		if f[i] == '%' {
-			switch f[i+1] {
-			case '-':
-			default:
-				if replace, found := convSpecs[rune(f[i+1])]; found {
-					buf.WriteString(replace)
-					i += 2
-				} else {
-					buf.WriteByte(f[i])
-				}
+			if replace, found := specs[rune(f[i+1])]; found {
+				buf.WriteString(replace)
+				i += 2
+			} else {
+				buf.WriteByte(f[i])
 			}
 		} else {
 			buf.WriteByte(f[i])
@@ -33,5 +29,6 @@ func parseFormat(f string) string {
 }
 
 func secondaryFormat(t time.Time, formattedTime string) string {
-	return formattedTime
+	specs := getSecondarySpecs(t)
+	return parseFormat(formattedTime, specs)
 }
