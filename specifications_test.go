@@ -18,13 +18,13 @@ func Test_getSecondarySpecs(t *testing.T) {
 		{
 			name: "February 28th 2019",
 			args: args{
-				t: time.Date(2019, time.February, 28, 0, 0, 0, 0, time.Local),
+				t: time.Date(2019, time.February, 28, 0, 0, 0, 0, time.FixedZone("EDT", -4*60*60)),
 			},
 			want: map[int32]string{
 				103: "19",
 				106: "059",
 				107: "0",
-				115: "1551330000",
+				115: "1551326400",
 				117: "4",
 				119: "4",
 				67:  "20",

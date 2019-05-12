@@ -19,7 +19,7 @@ func TestFormat(t *testing.T) {
 			name: "The abbreviated name of the day of the week",
 			args: args{
 				format: "%a",
-				t:      time.Date(2019, time.May, 11, 23, 45, 24, 0, time.Local),
+				t:      time.Date(2019, time.May, 11, 23, 45, 24, 0, time.FixedZone("EDT", -4*60*60)),
 			},
 			want: "Sat",
 		},
@@ -27,7 +27,7 @@ func TestFormat(t *testing.T) {
 			name: "The full name of the day of the week",
 			args: args{
 				format: "%A",
-				t:      time.Date(2019, time.May, 11, 23, 45, 24, 0, time.Local),
+				t:      time.Date(2019, time.May, 11, 23, 45, 24, 0, time.FixedZone("EDT", -4*60*60)),
 			},
 			want: "Saturday",
 		},
@@ -35,7 +35,7 @@ func TestFormat(t *testing.T) {
 			name: "The abbreviated month name",
 			args: args{
 				format: "%b",
-				t:      time.Date(2019, time.May, 11, 23, 45, 24, 0, time.Local),
+				t:      time.Date(2019, time.May, 11, 23, 45, 24, 0, time.FixedZone("EDT", -4*60*60)),
 			},
 			want: "May",
 		},
@@ -43,7 +43,7 @@ func TestFormat(t *testing.T) {
 			name: "The full month name",
 			args: args{
 				format: "%B",
-				t:      time.Date(2019, time.May, 11, 23, 45, 24, 0, time.Local),
+				t:      time.Date(2019, time.May, 11, 23, 45, 24, 0, time.FixedZone("EDT", -4*60*60)),
 			},
 			want: "May",
 		},
@@ -51,7 +51,7 @@ func TestFormat(t *testing.T) {
 			name: "The preferred date and time representation",
 			args: args{
 				format: "%c",
-				t:      time.Date(2019, time.May, 11, 23, 45, 24, 0, time.Local),
+				t:      time.Date(2019, time.May, 11, 23, 45, 24, 0, time.FixedZone("EDT", -4*60*60)),
 			},
 			want: "Sat May 11 23:45:24 2019",
 		},
@@ -59,7 +59,7 @@ func TestFormat(t *testing.T) {
 			name: "The day of the month as a decimal number (range 01 to 31)",
 			args: args{
 				format: "%d",
-				t:      time.Date(2019, time.May, 11, 23, 45, 24, 0, time.Local),
+				t:      time.Date(2019, time.May, 11, 23, 45, 24, 0, time.FixedZone("EDT", -4*60*60)),
 			},
 			want: "11",
 		},
@@ -67,7 +67,7 @@ func TestFormat(t *testing.T) {
 			name: "Equivalent to %m/%d/%y",
 			args: args{
 				format: "%D",
-				t:      time.Date(2019, time.May, 11, 23, 45, 24, 0, time.Local),
+				t:      time.Date(2019, time.May, 11, 23, 45, 24, 0, time.FixedZone("EDT", -4*60*60)),
 			},
 			want: "05/11/19",
 		},
@@ -75,7 +75,7 @@ func TestFormat(t *testing.T) {
 			name: "Like %d, the day of the month as a decimal number, but a leading zero is replaced by a space",
 			args: args{
 				format: "%e",
-				t:      time.Date(2019, time.May, 11, 23, 45, 24, 0, time.Local),
+				t:      time.Date(2019, time.May, 11, 23, 45, 24, 0, time.FixedZone("EDT", -4*60*60)),
 			},
 			want: "11",
 		},
@@ -83,7 +83,7 @@ func TestFormat(t *testing.T) {
 			name: "Equivalent to %Y-%m-%d (the ISO 8601 date format)",
 			args: args{
 				format: "%F",
-				t:      time.Date(2019, time.May, 11, 23, 45, 24, 0, time.Local),
+				t:      time.Date(2019, time.May, 11, 23, 45, 24, 0, time.FixedZone("EDT", -4*60*60)),
 			},
 			want: "2019-05-11",
 		},
@@ -91,7 +91,7 @@ func TestFormat(t *testing.T) {
 			name: "Equivalent to %b",
 			args: args{
 				format: "%h",
-				t:      time.Date(2019, time.May, 11, 23, 45, 24, 0, time.Local),
+				t:      time.Date(2019, time.May, 11, 23, 45, 24, 0, time.FixedZone("EDT", -4*60*60)),
 			},
 			want: "May",
 		},
@@ -99,7 +99,7 @@ func TestFormat(t *testing.T) {
 			name: "The hour as a decimal number using a 24-hour clock (range 00 to 23)",
 			args: args{
 				format: "%H",
-				t:      time.Date(2019, time.May, 11, 23, 45, 24, 0, time.Local),
+				t:      time.Date(2019, time.May, 11, 23, 45, 24, 0, time.FixedZone("EDT", -4*60*60)),
 			},
 			want: "23",
 		},
@@ -107,7 +107,7 @@ func TestFormat(t *testing.T) {
 			name: "The hour as a decimal number using a 12-hour clock (range 01 to 12)",
 			args: args{
 				format: "%I",
-				t:      time.Date(2019, time.May, 11, 23, 45, 24, 0, time.Local),
+				t:      time.Date(2019, time.May, 11, 23, 45, 24, 0, time.FixedZone("EDT", -4*60*60)),
 			},
 			want: "11",
 		},
@@ -115,7 +115,7 @@ func TestFormat(t *testing.T) {
 			name: "The hour (12-hour clock) as a decimal number (range 1 to 12); single digits are preceded by a blank.",
 			args: args{
 				format: "%l",
-				t:      time.Date(2019, time.May, 11, 23, 45, 24, 0, time.Local),
+				t:      time.Date(2019, time.May, 11, 23, 45, 24, 0, time.FixedZone("EDT", -4*60*60)),
 			},
 			want: "11",
 		},
@@ -123,7 +123,7 @@ func TestFormat(t *testing.T) {
 			name: "The month as a decimal number (range 01 to 12)",
 			args: args{
 				format: "%m",
-				t:      time.Date(2019, time.May, 11, 23, 45, 24, 0, time.Local),
+				t:      time.Date(2019, time.May, 11, 23, 45, 24, 0, time.FixedZone("EDT", -4*60*60)),
 			},
 			want: "05",
 		},
@@ -131,7 +131,7 @@ func TestFormat(t *testing.T) {
 			name: "The minute as a decimal number (range 00 to 59)",
 			args: args{
 				format: "%M",
-				t:      time.Date(2019, time.May, 11, 23, 45, 24, 0, time.Local),
+				t:      time.Date(2019, time.May, 11, 23, 45, 24, 0, time.FixedZone("EDT", -4*60*60)),
 			},
 			want: "45",
 		},
@@ -139,7 +139,7 @@ func TestFormat(t *testing.T) {
 			name: "A newline character",
 			args: args{
 				format: "%n",
-				t:      time.Date(2019, time.May, 11, 23, 45, 24, 0, time.Local),
+				t:      time.Date(2019, time.May, 11, 23, 45, 24, 0, time.FixedZone("EDT", -4*60*60)),
 			},
 			want: "\n",
 		},
@@ -147,7 +147,7 @@ func TestFormat(t *testing.T) {
 			name: "Either 'AM' or 'PM' according to the given time value. Noon is treated as 'PM' and midnight as 'AM'",
 			args: args{
 				format: "%p",
-				t:      time.Date(2019, time.May, 11, 23, 45, 24, 0, time.Local),
+				t:      time.Date(2019, time.May, 11, 23, 45, 24, 0, time.FixedZone("EDT", -4*60*60)),
 			},
 			want: "PM",
 		},
@@ -155,7 +155,7 @@ func TestFormat(t *testing.T) {
 			name: "Like %p but in lowercase: 'am' or 'pm'",
 			args: args{
 				format: "%P",
-				t:      time.Date(2019, time.May, 11, 23, 45, 24, 0, time.Local),
+				t:      time.Date(2019, time.May, 11, 23, 45, 24, 0, time.FixedZone("EDT", -4*60*60)),
 			},
 			want: "pm",
 		},
@@ -163,7 +163,7 @@ func TestFormat(t *testing.T) {
 			name: "The time in a.m. or p.m. notation",
 			args: args{
 				format: "%r",
-				t:      time.Date(2019, time.May, 11, 23, 45, 24, 0, time.Local),
+				t:      time.Date(2019, time.May, 11, 23, 45, 24, 0, time.FixedZone("EDT", -4*60*60)),
 			},
 			want: "11:45:24 PM",
 		},
@@ -171,7 +171,7 @@ func TestFormat(t *testing.T) {
 			name: "The time in 24-hour notation (%H:%M)",
 			args: args{
 				format: "%R",
-				t:      time.Date(2019, time.May, 11, 23, 45, 24, 0, time.Local),
+				t:      time.Date(2019, time.May, 11, 23, 45, 24, 0, time.FixedZone("EDT", -4*60*60)),
 			},
 			want: "23:45",
 		},
@@ -179,7 +179,7 @@ func TestFormat(t *testing.T) {
 			name: "The second as a decimal number (range 00 to 60)",
 			args: args{
 				format: "%S",
-				t:      time.Date(2019, time.May, 11, 23, 45, 24, 0, time.Local),
+				t:      time.Date(2019, time.May, 11, 23, 45, 24, 0, time.FixedZone("EDT", -4*60*60)),
 			},
 			want: "24",
 		},
@@ -187,7 +187,7 @@ func TestFormat(t *testing.T) {
 			name: "A tab character",
 			args: args{
 				format: "%t",
-				t:      time.Date(2019, time.May, 11, 23, 45, 24, 0, time.Local),
+				t:      time.Date(2019, time.May, 11, 23, 45, 24, 0, time.FixedZone("EDT", -4*60*60)),
 			},
 			want: "\t",
 		},
@@ -195,7 +195,7 @@ func TestFormat(t *testing.T) {
 			name: "The time in 24-hour notation (%H:%M:%S)",
 			args: args{
 				format: "%T",
-				t:      time.Date(2019, time.May, 11, 23, 45, 24, 0, time.Local),
+				t:      time.Date(2019, time.May, 11, 23, 45, 24, 0, time.FixedZone("EDT", -4*60*60)),
 			},
 			want: "23:45:24",
 		},
@@ -203,7 +203,7 @@ func TestFormat(t *testing.T) {
 			name: "Equivalent to %D",
 			args: args{
 				format: "%x",
-				t:      time.Date(2019, time.May, 11, 23, 45, 24, 0, time.Local),
+				t:      time.Date(2019, time.May, 11, 23, 45, 24, 0, time.FixedZone("EDT", -4*60*60)),
 			},
 			want: "05/11/19",
 		},
@@ -211,7 +211,7 @@ func TestFormat(t *testing.T) {
 			name: "Equivalent to %T",
 			args: args{
 				format: "%X",
-				t:      time.Date(2019, time.May, 11, 23, 45, 24, 0, time.Local),
+				t:      time.Date(2019, time.May, 11, 23, 45, 24, 0, time.FixedZone("EDT", -4*60*60)),
 			},
 			want: "23:45:24",
 		},
@@ -219,7 +219,7 @@ func TestFormat(t *testing.T) {
 			name: "The year as a decimal number without a century (range 00 to 99)",
 			args: args{
 				format: "%y",
-				t:      time.Date(2019, time.May, 11, 23, 45, 24, 0, time.Local),
+				t:      time.Date(2019, time.May, 11, 23, 45, 24, 0, time.FixedZone("EDT", -4*60*60)),
 			},
 			want: "19",
 		},
@@ -227,7 +227,7 @@ func TestFormat(t *testing.T) {
 			name: "The year as a decimal number including the century",
 			args: args{
 				format: "%Y",
-				t:      time.Date(2019, time.May, 11, 23, 45, 24, 0, time.Local),
+				t:      time.Date(2019, time.May, 11, 23, 45, 24, 0, time.FixedZone("EDT", -4*60*60)),
 			},
 			want: "2019",
 		},
@@ -235,7 +235,7 @@ func TestFormat(t *testing.T) {
 			name: "The +hhmm or -hhmm numeric timezone (that is, the hour and minute offset from UTC)",
 			args: args{
 				format: "%z",
-				t:      time.Date(2019, time.May, 11, 23, 45, 24, 0, time.Local),
+				t:      time.Date(2019, time.May, 11, 23, 45, 24, 0, time.FixedZone("EDT", -4*60*60)),
 			},
 			want: "-0400",
 		},
@@ -243,7 +243,7 @@ func TestFormat(t *testing.T) {
 			name: "The timezone name or abbreviation",
 			args: args{
 				format: "%Z",
-				t:      time.Date(2019, time.May, 11, 23, 45, 24, 0, time.Local),
+				t:      time.Date(2019, time.May, 11, 23, 45, 24, 0, time.FixedZone("EDT", -4*60*60)),
 			},
 			want: "EDT",
 		},
@@ -251,7 +251,7 @@ func TestFormat(t *testing.T) {
 			name: "The date and time in date(1) format",
 			args: args{
 				format: "%+",
-				t:      time.Date(2019, time.May, 11, 23, 45, 24, 0, time.Local),
+				t:      time.Date(2019, time.May, 11, 23, 45, 24, 0, time.FixedZone("EDT", -4*60*60)),
 			},
 			want: "Sat May 11 23:45:24 EDT 2019",
 		},
@@ -259,7 +259,7 @@ func TestFormat(t *testing.T) {
 			name: "A literal '%' character",
 			args: args{
 				format: "%%",
-				t:      time.Date(2019, time.May, 11, 23, 45, 24, 0, time.Local),
+				t:      time.Date(2019, time.May, 11, 23, 45, 24, 0, time.FixedZone("EDT", -4*60*60)),
 			},
 			want: "%",
 		},
@@ -267,7 +267,7 @@ func TestFormat(t *testing.T) {
 			name: "The century number (year/100) as a 2-digit integer",
 			args: args{
 				format: "%C",
-				t:      time.Date(2019, time.May, 11, 23, 45, 24, 0, time.Local),
+				t:      time.Date(2019, time.May, 11, 23, 45, 24, 0, time.FixedZone("EDT", -4*60*60)),
 			},
 			want: "20",
 		},
@@ -275,7 +275,7 @@ func TestFormat(t *testing.T) {
 			name: "The ISO 8601 week-based year with century as a decimal number",
 			args: args{
 				format: "%G",
-				t:      time.Date(2019, time.May, 11, 23, 45, 24, 0, time.Local),
+				t:      time.Date(2019, time.May, 11, 23, 45, 24, 0, time.FixedZone("EDT", -4*60*60)),
 			},
 			want: "2019",
 		},
@@ -283,7 +283,7 @@ func TestFormat(t *testing.T) {
 			name: "Like %G, but without century, that is, with a 2-digit year (00–99)",
 			args: args{
 				format: "%g",
-				t:      time.Date(2019, time.May, 11, 23, 45, 24, 0, time.Local),
+				t:      time.Date(2019, time.May, 11, 23, 45, 24, 0, time.FixedZone("EDT", -4*60*60)),
 			},
 			want: "19",
 		},
@@ -291,7 +291,7 @@ func TestFormat(t *testing.T) {
 			name: "The day of the year as a decimal number (range 001 to 366)",
 			args: args{
 				format: "%j",
-				t:      time.Date(2019, time.May, 11, 23, 45, 24, 0, time.Local),
+				t:      time.Date(2019, time.May, 11, 23, 45, 24, 0, time.FixedZone("EDT", -4*60*60)),
 			},
 			want: "131",
 		},
@@ -299,7 +299,7 @@ func TestFormat(t *testing.T) {
 			name: "The hour (24-hour clock) as a decimal number (range 0 to 23)",
 			args: args{
 				format: "%k",
-				t:      time.Date(2019, time.May, 11, 23, 45, 24, 0, time.Local),
+				t:      time.Date(2019, time.May, 11, 23, 45, 24, 0, time.FixedZone("EDT", -4*60*60)),
 			},
 			want: "23",
 		},
@@ -307,7 +307,7 @@ func TestFormat(t *testing.T) {
 			name: "The number of seconds since the Epoch, 1970-01-01 00:00:00 +0000 (UTC)",
 			args: args{
 				format: "%s",
-				t:      time.Date(2019, time.May, 11, 23, 45, 24, 0, time.Local),
+				t:      time.Date(2019, time.May, 11, 23, 45, 24, 0, time.FixedZone("EDT", -4*60*60)),
 			},
 			want: "1557632724",
 		},
@@ -315,7 +315,7 @@ func TestFormat(t *testing.T) {
 			name: "The day of the week as a decimal, range 1 to 7, Monday being 1",
 			args: args{
 				format: "%u",
-				t:      time.Date(2019, time.May, 11, 23, 45, 24, 0, time.Local),
+				t:      time.Date(2019, time.May, 11, 23, 45, 24, 0, time.FixedZone("EDT", -4*60*60)),
 			},
 			want: "6",
 		},
@@ -323,7 +323,7 @@ func TestFormat(t *testing.T) {
 			name: "The week number of the current year as a decimal number, range 00 to 53, starting with the first Sunday as the first day of week 01",
 			args: args{
 				format: "%U",
-				t:      time.Date(2019, time.May, 11, 23, 45, 24, 0, time.Local),
+				t:      time.Date(2019, time.May, 11, 23, 45, 24, 0, time.FixedZone("EDT", -4*60*60)),
 			},
 			want: "18",
 		},
@@ -331,7 +331,7 @@ func TestFormat(t *testing.T) {
 			name: "The ISO 8601 week number",
 			args: args{
 				format: "%V",
-				t:      time.Date(2019, time.May, 11, 23, 45, 24, 0, time.Local),
+				t:      time.Date(2019, time.May, 11, 23, 45, 24, 0, time.FixedZone("EDT", -4*60*60)),
 			},
 			want: "19",
 		},
@@ -339,7 +339,7 @@ func TestFormat(t *testing.T) {
 			name: "The day of the week as a decimal, range 0 to 6, Sunday being 0",
 			args: args{
 				format: "%w",
-				t:      time.Date(2019, time.May, 11, 23, 45, 24, 0, time.Local),
+				t:      time.Date(2019, time.May, 11, 23, 45, 24, 0, time.FixedZone("EDT", -4*60*60)),
 			},
 			want: "6",
 		},
@@ -347,7 +347,7 @@ func TestFormat(t *testing.T) {
 			name: "The week number of the current year as a decimal number, range 00 to 53, starting with the first Monday as the first day of week 01",
 			args: args{
 				format: "%W",
-				t:      time.Date(2019, time.May, 11, 23, 45, 24, 0, time.Local),
+				t:      time.Date(2019, time.May, 11, 23, 45, 24, 0, time.FixedZone("EDT", -4*60*60)),
 			},
 			want: "18",
 		},
