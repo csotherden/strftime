@@ -1,0 +1,24 @@
+language: go
+
+# Force-enable Go modules. Also force go to use the code in vendor/
+# These will both be unnecessary when Go 1.13 lands.
+env:
+  - GO111MODULE=on
+  - GOFLAGS='-mod vendor'
+
+go:
+  - tip
+
+# Only clone the most recent commit.
+git:
+  depth: 1
+
+before_script:
+  - go install github.com/golangci/golangci-lint/cmd/golangci-lint
+
+script:
+  - golangci-lint run
+  - go test -race -coverprofile=coverage.txt -covermode=atomic
+
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
