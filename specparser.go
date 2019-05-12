@@ -17,7 +17,7 @@ func parseFormat(f string, specs map[rune]string) string {
 		if f[i] == '%' {
 			if replace, found := specs[rune(f[i+1])]; found {
 				buf.WriteString(replace)
-				i += 2
+				i++
 			} else {
 				buf.WriteByte(f[i])
 			}
