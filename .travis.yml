@@ -7,7 +7,7 @@ env:
   - GOFLAGS='-mod vendor'
 
 go:
-  - tip
+  - 1.12.x
 
 # Only clone the most recent commit.
 git:
