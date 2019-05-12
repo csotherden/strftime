@@ -5,7 +5,7 @@
 [![Coverage Status](https://codecov.io/gh/csotherden/strftime/branch/master/graphs/badge.svg?branch=master)](https://codecov.io/gh/csotherden/strftime/)
 [![Go Report Card](https://goreportcard.com/badge/github.com/csotherden/strftime)](https://goreportcard.com/report/github.com/csotherden/strftime)
 
-##A Go package for strftime formatting
+## A Go package for strftime formatting
 
 Package strftime provides functionality for formatting time based on the C strftime(3) function. http://man7.org/linux/man-pages/man3/strftime.3.html
 
