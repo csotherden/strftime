@@ -1,271 +1,114 @@
 package strftime
 
-import "testing"
+import (
+	"reflect"
+	"testing"
+	"time"
+)
 
-func Test_parseFormat(t *testing.T) {
+func TestParse(t *testing.T) {
 	type args struct {
-		f string
-		s map[rune]string
+		format     string
+		timeString string
 	}
 	tests := []struct {
-		name string
-		args args
-		want string
+		name    string
+		args    args
+		want    time.Time
+		wantErr bool
 	}{
 		{
-			name: "The abbreviated name of the day of the week",
+			name: "ANSIC",
 			args: args{
-				f: "%a",
-				s: convSpecs,
+				format:     "%a %b  %e %H:%M:%S %Y",
+				timeString: "Wed Feb  4 21:00:57 2009",
 			},
-			want: "Mon",
+			want:    timeMustParse(time.ANSIC, "Wed Feb  4 21:00:57 2009"),
+			wantErr: false,
 		},
 		{
-			name: "The full name of the day of the week",
+			name: "UnixDate",
 			args: args{
-				f: "%A",
-				s: convSpecs,
+				format:     "%a %b  %e %H:%M:%S %Z %Y",
+				timeString: "Thu Feb  4 21:00:57 PST 2010",
 			},
-			want: "Monday",
+			want:    timeMustParse(time.UnixDate, "Thu Feb  4 21:00:57 PST 2010"),
+			wantErr: false,
 		},
 		{
-			name: "The abbreviated month name",
+			name: "RubyDate",
 			args: args{
-				f: "%b",
-				s: convSpecs,
+				format:     "%a %b %e %H:%M:%S %z %Y",
+				timeString: "Thu Feb 04 21:00:57 -0800 2010",
 			},
-			want: "Jan",
+			want:    timeMustParse(time.RubyDate, "Thu Feb 04 21:00:57 -0800 2010"),
+			wantErr: false,
 		},
 		{
-			name: "The full month name",
+			name: "RFC850",
 			args: args{
-				f: "%B",
-				s: convSpecs,
+				format:     "%A, %e-%b-%y %H:%M:%S %Z",
+				timeString: "Thursday, 04-Feb-10 21:00:57 PST",
 			},
-			want: "January",
+			want:    timeMustParse(time.RFC850, "Thursday, 04-Feb-10 21:00:57 PST"),
+			wantErr: false,
 		},
 		{
-			name: "The preferred date and time representation",
+			name: "RFC1123",
 			args: args{
-				f: "%c",
-				s: convSpecs,
+				format:     "%a, %e %b %Y %H:%M:%S %Z",
+				timeString: "Thu, 04 Feb 2010 21:00:57 PST",
 			},
-			want: "Mon Jan 02 15:04:05 2006",
+			want:    timeMustParse(time.RFC1123, "Thu, 04 Feb 2010 21:00:57 PST"),
+			wantErr: false,
 		},
 		{
-			name: "The day of the month as a decimal number (range 01 to 31)",
+			name: "RFC1123Z",
 			args: args{
-				f: "%d",
-				s: convSpecs,
+				format:     "%a, %e %b %Y %H:%M:%S %z",
+				timeString: "Thu, 04 Feb 2010 21:00:57 -0800",
 			},
-			want: "02",
+			want:    timeMustParse(time.RFC1123Z, "Thu, 04 Feb 2010 21:00:57 -0800"),
+			wantErr: false,
+		},
+		/*{
+			name:"RFC3339",
+			args:args{
+				format: "%Y-%m-%dT%H:%M:%S",
+				timeString: "2010-02-04T21:00:57-08:00",
+			},
+			want:timeMustParse(time.ANSIC, "2010-02-04T21:00:57-08:00"),
+			wantErr: false,
 		},
 		{
-			name: "Equivalent to %m/%d/%y",
-			args: args{
-				f: "%D",
-				s: convSpecs,
+			name:"custom",
+			args:args{
+				format: "%a %b  %e %H:%M:%S %Y",
+				timeString: "2006-01-02 15:04:05-07",
 			},
-			want: "01/02/06",
-		},
-		{
-			name: "Like %d, the day of the month as a decimal number, but a leading zero is replaced by a space",
-			args: args{
-				f: "%e",
-				s: convSpecs,
-			},
-			want: "2",
-		},
-		{
-			name: "Equivalent to %Y-%m-%d (the ISO 8601 date format)",
-			args: args{
-				f: "%F",
-				s: convSpecs,
-			},
-			want: "2006-01-02",
-		},
-		{
-			name: "Equivalent to %b",
-			args: args{
-				f: "%h",
-				s: convSpecs,
-			},
-			want: "Jan",
-		},
-		{
-			name: "The hour as a decimal number using a 24-hour clock (range 00 to 23)",
-			args: args{
-				f: "%H",
-				s: convSpecs,
-			},
-			want: "15",
-		},
-		{
-			name: "The hour as a decimal number using a 12-hour clock (range 01 to 12)",
-			args: args{
-				f: "%I",
-				s: convSpecs,
-			},
-			want: "03",
-		},
-		{
-			name: "The hour (12-hour clock) as a decimal number (range 1 to 12); single digits are preceded by a blank.",
-			args: args{
-				f: "%l",
-				s: convSpecs,
-			},
-			want: "3",
-		},
-		{
-			name: "The month as a decimal number (range 01 to 12)",
-			args: args{
-				f: "%m",
-				s: convSpecs,
-			},
-			want: "01",
-		},
-		{
-			name: "The minute as a decimal number (range 00 to 59)",
-			args: args{
-				f: "%M",
-				s: convSpecs,
-			},
-			want: "04",
-		},
-		{
-			name: "A newline character",
-			args: args{
-				f: "%n",
-				s: convSpecs,
-			},
-			want: "\n",
-		},
-		{
-			name: "Either 'AM' or 'PM' according to the given time value. Noon is treated as 'PM' and midnight as 'AM'",
-			args: args{
-				f: "%p",
-				s: convSpecs,
-			},
-			want: "PM",
-		},
-		{
-			name: "Like %p but in lowercase: 'am' or 'pm'",
-			args: args{
-				f: "%P",
-				s: convSpecs,
-			},
-			want: "pm",
-		},
-		{
-			name: "The time in a.m. or p.m. notation",
-			args: args{
-				f: "%r",
-				s: convSpecs,
-			},
-			want: "03:04:05 PM",
-		},
-		{
-			name: "The time in 24-hour notation (%H:%M)",
-			args: args{
-				f: "%R",
-				s: convSpecs,
-			},
-			want: "15:04",
-		},
-		{
-			name: "The second as a decimal number (range 00 to 60)",
-			args: args{
-				f: "%S",
-				s: convSpecs,
-			},
-			want: "05",
-		},
-		{
-			name: "A tab character",
-			args: args{
-				f: "%t",
-				s: convSpecs,
-			},
-			want: "\t",
-		},
-		{
-			name: "The time in 24-hour notation (%H:%M:%S)",
-			args: args{
-				f: "%T",
-				s: convSpecs,
-			},
-			want: "15:04:05",
-		},
-		{
-			name: "Equivalent to %D",
-			args: args{
-				f: "%x",
-				s: convSpecs,
-			},
-			want: "01/02/06",
-		},
-		{
-			name: "Equivalent to %T",
-			args: args{
-				f: "%X",
-				s: convSpecs,
-			},
-			want: "15:04:05",
-		},
-		{
-			name: "The year as a decimal number without a century (range 00 to 99)",
-			args: args{
-				f: "%y",
-				s: convSpecs,
-			},
-			want: "06",
-		},
-		{
-			name: "The year as a decimal number including the century",
-			args: args{
-				f: "%Y",
-				s: convSpecs,
-			},
-			want: "2006",
-		},
-		{
-			name: "The +hhmm or -hhmm numeric timezone (that is, the hour and minute offset from UTC)",
-			args: args{
-				f: "%z",
-				s: convSpecs,
-			},
-			want: "-0700",
-		},
-		{
-			name: "The timezone name or abbreviation",
-			args: args{
-				f: "%Z",
-				s: convSpecs,
-			},
-			want: "MST",
-		},
-		{
-			name: "The date and time in date(1) format",
-			args: args{
-				f: "%+",
-				s: convSpecs,
-			},
-			want: "Mon Jan 02 15:04:05 MST 2006",
-		},
-		{
-			name: "A literal '%' character",
-			args: args{
-				f: "%%",
-				s: convSpecs,
-			},
-			want: "%",
-		},
+			want:timeMustParse(time.ANSIC, "2006-01-02 15:04:05-07"),
+			wantErr: false,
+		},*/
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			if got := parseFormat(tt.args.f, tt.args.s); got != tt.want {
-				t.Errorf("parseFormat() = %v, want %v", got, tt.want)
+			got, err := Parse(tt.args.format, tt.args.timeString)
+			if (err != nil) != tt.wantErr {
+				t.Errorf("Convert() error = %v, wantErr %v", err, tt.wantErr)
+				return
+			}
+			if !reflect.DeepEqual(got, tt.want) {
+				t.Errorf("Convert() = %v, want %v", got, tt.want)
 			}
 		})
 	}
+}
+
+func timeMustParse(layout, timeString string) time.Time {
+	t, err := time.Parse(layout, timeString)
+	if err != nil {
+		panic(err)
+	}
+
+	return t
 }
